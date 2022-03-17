@@ -151,6 +151,9 @@ class binaryTree {
     this.print(currentNode?.right)
 
   }
+  bfs(){
+    
+  }
 
 
 }
