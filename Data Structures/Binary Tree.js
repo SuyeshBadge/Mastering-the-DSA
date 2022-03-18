@@ -55,7 +55,7 @@ class binaryTree {
     }
     return false
   }
-  remove(value=this.root?.value) {
+  remove(value = this.root ?. value) {
     if (!this.root) {
       return false
     }
@@ -89,12 +89,12 @@ class binaryTree {
           else {
             if (parentNode.value > currentNode.value) {
               parentNode.left = currentNode.right
-              currentNode.right.left=currentNode.left
+              currentNode.right.left = currentNode.left
               currentNode.left = null
               currentNode.right = null
             } else if (parentNode.value < currentNode.value) {
               parentNode.right = currentNode.right
-              currentNode.right.left=currentNode.left
+              currentNode.right.left = currentNode.left
               currentNode.left = null
               currentNode.right = null
 
@@ -114,15 +114,15 @@ class binaryTree {
           else {
             if (parentNode.value > currentNode.value) {
               parentNode.left = leftMost
-              leftMost.left=currentNode.left
-              leftMost.right=currentNode.right
+              leftMost.left = currentNode.left
+              leftMost.right = currentNode.right
               currentNode.left = null
               currentNode.right = null
 
             } else if (parentNode.value < currentNode.value) {
               parentNode.right = leftMost
-              leftMost.left=currentNode.left
-              leftMost.right=currentNode.right
+              leftMost.left = currentNode.left
+              leftMost.right = currentNode.right
 
               currentNode.left = null
               currentNode.right = null
@@ -133,13 +133,13 @@ class binaryTree {
       }
     }
   }
-  print(start=this.root){
-    let currentNode=start
+  print(start = this.root) {
+    let currentNode = start
 
-    if(start===null){
+    if (start === null) {
       // cl(`null`)
       return null
-    }else{
+    } else {
       cl(`            ${currentNode.value}
           /   \\
          /     \\
@@ -147,12 +147,60 @@ class binaryTree {
     }
     cl(`
     `)
-    this.print(currentNode?.left)
-    this.print(currentNode?.right)
+    this.print(currentNode ?.left)
+    this.print(currentNode ?.right)
 
   }
-  bfs(){
+  bfs() {
+    let currentNode 
+    let list = []
+    let queue = [this.root]
+    while (queue.length) {
+      currentNode=queue.shift()
+      list.push(currentNode.value)
+      if (currentNode.left) {
+        // list.push(currentNode.left.value)
+        queue.push(currentNode.left)
+      }
+      if (currentNode.right) {
+        // list.push(currentNode.right.value)
+        queue.push(currentNode.right)
+      }
+      // cl(queue)
+    }
+    return  list
+  }
+  dfsInorder(node=this.root,list=[]){
     
+    if(node.left){
+      this.dfsInorder(node.left,list)
+    }
+    list.push(node.value)
+    if(node.right){
+      this.dfsInorder(node.right,list)
+    }
+    return list
+  }
+  dfsPreorder(node=this.root,list=[]){
+    list.push(node.value)
+    if(node.left){
+      this.dfsPreorder(node.left,list)
+    }
+    if(node.right){
+      this.dfsPreorder(node.right,list)
+    }
+    return list
+  }
+  dfsPostorder(node=this.root,list=[]){
+    if(node.left){
+      this.dfsPostorder(node.left,list)
+    }
+    if(node.right){
+      this.dfsPostorder(node.right,list)
+    }
+    list.push(node.value)
+
+    return list
   }
 
 
@@ -168,7 +216,10 @@ tree.insert(20)
 tree.insert(170)
 tree.insert(15)
 tree.insert(1)
-tree.remove(20)
+// tree.remove(20)
 // cl(tree.lookup(4))
 // cl(tree)
-tree.print()
+// tree.print()
+cl(tree.dfsInorder())
+cl(tree.dfsPreorder())
+cl(tree.dfsPostorder())
